@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Editor</title>
+  <style type="text/css" media="screen">
+    body { overflow: hidden; }
+    #editor { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
+  </style>
+</head>
+<body>
+
+<div id="editor">function welcome(visitor) {
+  // This is the Ajax.org Code Editor (ACE). It's a combination of code
+  // from Ajax.org and code from the Mozilla Skywriter project. Embedding this editor
+  // in your app is easy (and it's MPL/LGPL/GPL tri-licensed, so it can be used
+  // for commercial or non-commercial use!)
+  
+  ace.edit("id_of_node_to_turn_into_editor");
+  var env = document.getElementById("id_of_node_to_turn_into_editor");
+  env.document.setValue("Easy to replace the text!");
+}</div>
+    
+<script src="ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    ace.edit("editor");
+  }, false);
+</script>
+
+</body>
+</html>

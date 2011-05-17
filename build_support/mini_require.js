@@ -48,6 +48,10 @@ if (window.require) {
     return;
 }
 
+var isFunction = function(it) {
+    return Object.prototype.toString.call(it) === "[object Function]";
+};
+
 var _define = function(module, deps, payload) {
     if (typeof module !== 'string') {
         if (_define.original)
@@ -58,14 +62,31 @@ var _define = function(module, deps, payload) {
         }
         return;
     }
+    
+    var ary, args = [];
 
-    if (arguments.length == 2)
+    if (arguments.length == 2) {
         payload = deps;
+    } else {
+        ary = deps;
+    }
 
     if (!define.modules)
         define.modules = {};
 
-    define.modules[module] = payload;
+    // Call the callback to define the module, if necessary    
+    if (isFunction(payload)) {
+        // Pull out the defined dependencies and pass the ordered
+        // values to the callback.
+        if (ary) {
+            for (i = 0; i < ary.length; i++) {
+                args.push(lookup(ary[i]));
+            }
+        }
+        define.modules[module] = payload.apply(payload, args);
+    } else {
+        define.modules[module] = payload;
+    }
 };
 if (window.define)
     _define.original = window.define;
